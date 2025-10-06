@@ -1,0 +1,7 @@
+<div class="card">
+  <img [src]="imagen.nombre_archivo" [alt]="imagen.codigo" />
+  <div class="card-info">
+    <p><strong>Precio:</strong> {{ imagen.precioPublico | currency }}</p>
+    <p><strong>Código:</strong> {{ imagen.codigo }}</p>
+  </div>
+</div>

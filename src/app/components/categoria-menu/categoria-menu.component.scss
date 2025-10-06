@@ -1,0 +1,137 @@
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --primary: #2563eb;   /* azul principal */
+  --muted: #6b7280;
+  --border: #e6eefb;
+  --accent: #0ea5e9;
+}
+
+/* contenedor del menú lateral */
+.menu-lateral {
+  width: 220px;
+  min-width: 160px;
+  background: linear-gradient(180deg, var(--card), #fbfdff);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(28, 39, 50, 0.06);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+/* header (toggle + título) */
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* botón visible en móvil */
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.menu-toggle:hover {
+  background: rgba(37,99,235,0.06);
+}
+
+/* título del menú */
+.menu-title {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+/* lista */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* item */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .15s ease, transform .12s ease, color .15s ease;
+  user-select: none;
+}
+
+.menu-item:hover {
+  background: rgba(14,165,233,0.06);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* activo */
+.menu-item.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.14);
+  font-weight: 600;
+}
+
+/* texto */
+.item-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* estilos responsive: colapsar en pantallas pequeñas */
+@media (max-width: 900px) {
+  .menu-lateral {
+    width: 100%;
+    min-width: 0;
+    border-radius: 0;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    display: flex;
+    z-index: 40;
+    flex-direction: column;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .menu-list {
+    margin-top: 8px;
+    gap: 8px;
+    transition: max-height .2s ease, opacity .2s ease;
+    overflow: hidden;
+  }
+
+  /* ocultar lista cuando collapsed=true */
+  .menu-lateral.collapsed .menu-list {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    padding: 0;
+  }
+
+  .menu-lateral:not(.collapsed) .menu-list {
+    max-height: 420px; /* suficiente para mostrar opciones */
+    opacity: 1;
+  }
+}

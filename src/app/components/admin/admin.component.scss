@@ -1,0 +1,121 @@
+.admin-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    label {
+      font-weight: 600;
+      color: #444;
+    }
+
+    input,
+    select {
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #0077ff;
+        box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.15);
+      }
+    }
+  }
+
+  .image-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+
+    img {
+      border-radius: 8px;
+      max-width: 150px;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="number"] {
+      max-width: 200px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  }
+
+  .btn-submit {
+    align-self: center;
+    padding: 0.8rem 1.6rem;
+    background: #0077ff;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background: #005fd4;
+      transform: scale(1.02);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  progress {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+
+    &::-webkit-progress-bar {
+      background-color: #eee;
+    }
+
+    &::-webkit-progress-value {
+      background-color: #0077ff;
+    }
+  }
+
+  .upload-success {
+    color: #28a745;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,34 @@
+.card {
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  border: 5px solid rgba(16, 64, 175, 0.04);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .14s ease, box-shadow .14s ease;
+  box-shadow: 0 2px 8px rgba(16,24,40,0.04);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(16,24,40,0.08);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.card-info p {
+  margin: 0;
+}

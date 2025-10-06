@@ -1,0 +1,43 @@
+<!-- <div class="catalogo-container">
+  <div class="contenido-principal">
+    <div class="grid-imagenes">
+      <app-imagen *ngFor="let img of imagenes" [imagen]="img"></app-imagen>
+    </div>
+
+    <div class="paginacion">
+      <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">Anterior</button>
+      <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+      <button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">Siguiente</button>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+<div class="catalogo-container">
+  <h2 class="title">Catálogo</h2>
+
+  <!-- Muestra mensaje si no hay imágenes -->
+  <div *ngIf="imagenes.length === 0" class="no-data">
+    No hay imágenes disponibles para esta categoría.
+  </div>
+
+  <!-- Grid de imágenes -->
+  <div class="grid-container">
+    <app-imagen
+      *ngFor="let img of imagenes"
+      [imagen]="img"
+      class="grid-item"
+    ></app-imagen>
+  </div>
+
+  <!-- Paginación -->
+  <div class="paginacion">
+    <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">Anterior</button>
+    <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+    <button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">Siguiente</button>
+  </div>
+</div>
+

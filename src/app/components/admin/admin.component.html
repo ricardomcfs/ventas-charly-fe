@@ -1,0 +1,125 @@
+<div class="admin-container">
+  <h2>Subir imágenes al catálogo</h2>
+
+  <form [formGroup]="form" (ngSubmit)="uploadAll()">
+    <div class="form-group">
+      <label>Nombre Tienda</label>
+      <input type="text" formControlName="tienda" placeholder="Ej: Bolsas Charly">
+    </div>
+    
+    <div class="form-group">
+      <label>Código Tienda</label>
+      <input type="text" formControlName="codigo" placeholder="Ej: BC">
+    </div>
+
+    <div class="form-group">
+      <label>Categoría</label>
+      <select formControlName="categoria_id">
+        <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Seleccionar imágenes</label>
+      <input type="file" multiple (change)="onFileChange($event)">
+    </div>
+
+    <div *ngFor="let img of imagenes; let i = index" class="image-item">
+      <img *ngIf="img.preview" [src]="img.preview" alt="Imagen {{ i }}" width="150">
+      <label>Precio mayoreo: </label>
+      <input type="number" placeholder="Precio público" [(ngModel)]="imagenes[i].precioPublico" [ngModelOptions]="{standalone: true}">
+      <label>Precio publico: </label>
+      <input type="number" placeholder="Precio mayoreo" [(ngModel)]="imagenes[i].precioMayoreo" [ngModelOptions]="{standalone: true}">
+      <label>
+        Activo
+        <input type="checkbox" [(ngModel)]="imagenes[i].activo" [ngModelOptions]="{standalone: true}">
+      </label>
+    </div>
+
+    <button type="submit" class="btn-submit">Subir imágenes</button>
+  </form>
+
+  <div *ngIf="progress > 0 && !uploadFinished">
+    <p>Subiendo... {{ progress }}%</p>
+    <progress [value]="progress" max="100"></progress>
+  </div>
+
+  <div *ngIf="uploadFinished">
+    ✅ ¡Imágenes cargadas con éxito!
+  </div>
+</div>
+
+
+
+
+
+
+<!-- 
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">Administrador de Imágenes</h2>
+
+  <form [formGroup]="form" class="space-y-4">
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex-1">
+        <label class="block text-sm font-medium mb-1">Código</label>
+        <input formControlName="codigo" type="text"
+               class="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300">
+      </div>
+
+      <div class="flex-1">
+        <label class="block text-sm font-medium mb-1">Categoría</label>
+        <select formControlName="categoria_id"
+                class="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300">
+          <option *ngFor="let cat of categorias" [value]="cat.id">
+            {{ cat.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Seleccionar Imágenes</label>
+      <input type="file" (change)="onFileChange($event)" multiple
+             class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4
+                    file:rounded-full file:border-0 file:text-sm file:font-semibold
+                    file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+    </div>
+  </form>
+
+  <div *ngIf="imagenes.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+    <div *ngFor="let img of imagenes; let i = index"
+         class="bg-white shadow rounded-xl p-3 flex flex-col items-center">
+      <img [src]="img.preview" class="w-full h-48 object-cover rounded-lg mb-2" />
+      
+      <div class="w-full flex flex-col gap-2">
+        <label class="text-sm">Precio Público</label>
+        <input type="number" [(ngModel)]="imagenes[i].precioPublico"
+               class="w-full border rounded px-2 py-1 text-right">
+        
+        <label class="text-sm">Precio Mayoreo</label>
+        <input type="number" [(ngModel)]="imagenes[i].precioMayoreo"
+               class="w-full border rounded px-2 py-1 text-right">
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end">
+    <button (click)="uploadAll()"
+            [disabled]="imagenes.length === 0"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg disabled:opacity-50">
+      Subir Imágenes
+    </button>
+  </div>
+
+  <div *ngIf="progress > 0 && !uploadFinished" class="mt-4">
+    <div class="w-full bg-gray-200 rounded-full h-4">
+      <div class="bg-blue-600 h-4 rounded-full transition-all duration-300"
+           [style.width.%]="progress"></div>
+    </div>
+    <p class="text-sm text-gray-600 mt-1 text-right">{{ progress }}%</p>
+  </div>
+
+  <div *ngIf="uploadFinished" class="mt-4 p-3 bg-green-100 text-green-700 rounded">
+    ✅ Imágenes subidas correctamente
+  </div>
+</div> -->

@@ -1,0 +1,27 @@
+<nav class="menu-lateral" [class.collapsed]="collapsed" aria-label="Menú de categorías">
+  <div class="menu-header">
+    <button class="menu-toggle" (click)="toggle()" aria-expanded="{{!collapsed}}" aria-controls="menu-list">
+      <span class="visually-hidden">Mostrar/ocultar categorías</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+    </button>
+    <!-- <div class="menu-title">Categorías</div> -->
+  </div>
+
+  <ul id="menu-list" role="menu" class="menu-list">
+    <li role="menuitem"
+        class="menu-item"
+        [class.active]="categoriaActiva === null"
+        (click)="seleccionarCategoria(null)">
+      <span class="item-label">Todas</span>
+    </li>
+
+    <li role="menuitem" *ngFor="let cat of categorias"
+        class="menu-item"
+        [class.active]="categoriaActiva === cat.id"
+        (click)="seleccionarCategoria(cat.id)">
+      <span class="item-label">{{ cat.nombre }}</span>
+    </li>
+  </ul>
+</nav>
