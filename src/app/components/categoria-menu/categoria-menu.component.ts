@@ -18,14 +18,17 @@ interface Categoria {
 export class CategoriaMenuComponent {
   categorias: any[] = [];
   categoriaActiva: number | null = null;
-  collapsed = false; // para responsive
+  private cargado = false;
 
   @Output() categoriaSeleccionada = new EventEmitter<number | null>();
 
   constructor(private api: ApiService) {}
 
   ngOnInit() {
-    this.cargarCategorias();
+    if (!this.cargado) {
+      this.cargarCategorias();
+      this.cargado = true;
+    }
   }
 
   async cargarCategorias() {
@@ -40,12 +43,6 @@ export class CategoriaMenuComponent {
   seleccionarCategoria(id: number | null) {
     this.categoriaActiva = id;
     this.categoriaSeleccionada.emit(id);
-    // en mobile cerramos el menú
-    if (window.innerWidth < 900) this.collapsed = true;
-  }
-
-  toggle() {
-    this.collapsed = !this.collapsed;
   }
 }
 

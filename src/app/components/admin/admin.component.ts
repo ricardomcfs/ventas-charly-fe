@@ -6,8 +6,6 @@ import { ApiService } from '../../services/api.service';
 
 interface ImagenItem {
   file: File;
-  precioPublico: number;
-  precioMayoreo: number;
   tienda: string;
   codigo: string;
   activo: boolean;
@@ -36,6 +34,9 @@ export class AdminComponent {
   progress = 0;
   uploadFinished = false;
 
+  private readonly USER = 'charly';
+  private readonly PASS = 'leticia';
+
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.form = this.fb.group({
       tienda: [''],
@@ -46,6 +47,24 @@ export class AdminComponent {
       activo: [true],
       files: [null]
     });
+
+    this.checkLogin();
+  }
+
+  private checkLogin() {
+    const logged = sessionStorage.getItem('loggedIn');
+    if (logged === 'true') return;
+
+    const user = prompt('Usuario:');
+    const pass = prompt('Contraseña:');
+
+    if (user === this.USER && pass === this.PASS) {
+      sessionStorage.setItem('loggedIn', 'true');
+    } else {
+      alert('Usuario o contraseña incorrectos');
+      // Redirige al inicio si falla login
+      window.location.href = '/';
+    }
   }
 
   // Al seleccionar archivos
@@ -55,8 +74,6 @@ export class AdminComponent {
       const file = files[i];
       this.imagenes.push({
         file,
-        precioPublico: 0,
-        precioMayoreo: 0,
         tienda: this.form.value.tienda,
         codigo: this.form.value.codigo,
         activo: true,
@@ -72,35 +89,28 @@ export class AdminComponent {
 
     const formData = new FormData();
 
-    // ⚠️ Importante: el backend espera un único categoria_id y un array de precios en JSON
-    formData.append('categoria_id', this.form.value.categoria_id);
-    formData.append('codigo', this.form.value.codigo || '');
+    const precioPublicoGlobal = this.form.value.precioPublico;
+    const precioMayoreoGlobal = this.form.value.precioMayoreo;
 
-    const precios = this.imagenes.map(img => ({
-      precioPublico: img.precioPublico,
-      precioMayoreo: img.precioMayoreo
-    }));
-
-    formData.append('precios', JSON.stringify(precios));
-
-    this.imagenes.forEach(img => {
+    this.imagenes.forEach((img, index) => {
       formData.append('imagenes', img.file);
+      formData.append(`precioPublico`, precioPublicoGlobal.toString());
+      formData.append(`precioMayoreo`, precioMayoreoGlobal.toString());
+      formData.append(`tienda`, img.tienda);
+      formData.append(`codigo`, img.codigo);
+      formData.append(`activo`, '1');
+      formData.append(`categoria_id`, img.categoria_id.toString());
     });
 
     try {
       this.progress = 0;
       this.uploadFinished = false;
 
-      const response = await this.api.uploadImagenes(
-        formData,
-        (progressEvent: ProgressEvent) => {
-          if (progressEvent.lengthComputable) {
-            this.progress = Math.round(
-              (progressEvent.loaded / progressEvent.total) * 100
-            );
-          }
+      const response = await this.api.uploadImagenes(formData, (progressEvent: ProgressEvent) => {
+        if (progressEvent.lengthComputable) {
+          this.progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
         }
-      );
+      });
 
       console.log('Respuesta backend:', response);
       this.uploadFinished = true;

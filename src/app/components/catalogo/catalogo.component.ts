@@ -29,7 +29,6 @@ export class CatalogoComponent implements OnInit {
   async cargarImagenes() {
     try {
       const resp = await this.api.getImagenes();
-      console.log(resp);
       this.imagenes = resp.data; // solo las activas
       this.aplicarFiltros();
     } catch (err) {
