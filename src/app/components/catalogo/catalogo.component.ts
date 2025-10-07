@@ -13,12 +13,11 @@ import { ImagenComponent } from '../imagen/imagen.component';
 })
 export class CatalogoComponent implements OnInit {
   imagenes: any[] = [];
-  imagenesFiltradas: any[] = [];
-
   paginaActual = 1;
-  itemsPorPagina = 8;
+  itemsPorPagina = 10;
   totalPaginas = 1;
   categoriaSeleccionada: number | null = null;
+  cargando = false;
 
   constructor(private api: ApiService) {}
 
@@ -27,42 +26,39 @@ export class CatalogoComponent implements OnInit {
   }
 
   async cargarImagenes() {
+    this.cargando = true;
     try {
-      const resp = await this.api.getImagenes();
-      this.imagenes = resp.data; // solo las activas
-      this.aplicarFiltros();
+      const resp = await this.api.getImagenes(
+        this.categoriaSeleccionada,
+        this.paginaActual,
+        this.itemsPorPagina
+      );
+      this.imagenes = resp.data;
+      this.totalPaginas = Math.ceil(resp.total / this.itemsPorPagina);
     } catch (err) {
       console.error('Error cargando imágenes', err);
+    } finally {
+      this.cargando = false;
     }
   }
 
-  filtrarPorCategoria(categoriaId: number | null) {
+  async filtrarPorCategoria(categoriaId: number | null) {
     this.categoriaSeleccionada = categoriaId;
     this.paginaActual = 1;
-    this.aplicarFiltros();
+    await this.cargarImagenes();
   }
 
-  aplicarFiltros() {
-    let lista = [...this.imagenes];
-    if (this.categoriaSeleccionada) {
-      lista = lista.filter(img => img.categoria_id === this.categoriaSeleccionada);
-    }
-    this.totalPaginas = Math.ceil(lista.length / this.itemsPorPagina);
-    const start = (this.paginaActual - 1) * this.itemsPorPagina;
-    this.imagenesFiltradas = lista.slice(start, start + this.itemsPorPagina);
-  }
-
-  paginaAnterior() {
+  async paginaAnterior() {
     if (this.paginaActual > 1) {
       this.paginaActual--;
-      this.aplicarFiltros();
+      await this.cargarImagenes();
     }
   }
 
-  paginaSiguiente() {
+  async paginaSiguiente() {
     if (this.paginaActual < this.totalPaginas) {
       this.paginaActual++;
-      this.aplicarFiltros();
+      await this.cargarImagenes();
     }
   }
 }
