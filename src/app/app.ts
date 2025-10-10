@@ -9,9 +9,17 @@ import { CategoriaMenuComponent } from './components/categoria-menu/categoria-me
   standalone: true,
   imports: [RouterModule, CategoriaMenuComponent, CommonModule],
   template: `
-        <div class="app-container">
-        <!-- Botón flotante -->
-        <button class="menu-toggle" (click)="menuOpen = !menuOpen">☰</button>
+      <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+          <div class="logo">
+            <img src="https://res.cloudinary.com/dwwanttjq/image/upload/v1760075105/bolsas_charly_u2mw6l.jpg" alt="Bolsas Charly Logo">
+            <span>Bolsas Charly</span>
+          </div>
+
+          <!-- Botón flotante menú -->
+          <button class="menu-toggle" (click)="menuOpen = !menuOpen">☰</button>
+        </header>
 
         <!-- Sidebar -->
         <div class="sidebar" [class.open]="menuOpen">
@@ -24,9 +32,9 @@ import { CategoriaMenuComponent } from './components/categoria-menu/categoria-me
         <div class="overlay" *ngIf="menuOpen" (click)="menuOpen = false"></div>
 
         <!-- Contenido principal -->
-        <div class="content">
+        <main class="content">
           <router-outlet></router-outlet>
-        </div>
+        </main>
       </div>
 
   `,
