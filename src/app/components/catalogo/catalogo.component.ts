@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { ApiService } from '../../services/api.service';
+import { ImagenZoomComponent } from '../imagen-zoom/imagen-zoom.component';
 import { ImagenComponent } from '../imagen/imagen.component';
 
 @Component({
   selector: 'app-catalogo',
   standalone: true,
-  imports: [CommonModule, ImagenComponent],
+  imports: [CommonModule, ImagenComponent, ImagenZoomComponent],
   templateUrl: './catalogo.component.html',
   styleUrls: ['./catalogo.component.scss']
 })
@@ -18,6 +19,7 @@ export class CatalogoComponent implements OnInit {
   totalPaginas = 1;
   categoriaSeleccionada: number | null = null;
   cargando = false;
+  imagenZoom: string | null = null;
 
   constructor(private api: ApiService) {}
 
@@ -60,5 +62,13 @@ export class CatalogoComponent implements OnInit {
       this.paginaActual++;
       await this.cargarImagenes();
     }
+  }
+
+  abrirZoom(url: string) {
+    this.imagenZoom = url;
+  }
+
+  cerrarZoom() {
+    this.imagenZoom = null;
   }
 }

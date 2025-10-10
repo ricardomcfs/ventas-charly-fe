@@ -30,6 +30,7 @@
       *ngFor="let img of imagenes"
       [imagen]="img"
       class="grid-item"
+      (click)="abrirZoom(img.nombre_archivo)"
     ></app-imagen>
   </div>
 
@@ -41,3 +42,7 @@
   </div>
 </div>
 
+<app-imagen-zoom *ngIf="imagenZoom"
+                 [imagen]="imagenZoom"
+                 (cerrar)="cerrarZoom()">
+</app-imagen-zoom>
